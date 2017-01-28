@@ -108,7 +108,7 @@ h1 {
     -moz-border-radius:28px;
     -webkit-border-radius:28px;
     border-radius:28px;
-    border:1px solid #324a35;
+    border:1px solid #4a4949;
     display:inline-block;
     cursor:pointer;
     color:#fafafa;
@@ -116,7 +116,7 @@ h1 {
     font-size:17px;
     padding:16px 31px;
     text-decoration:none;
-    text-shadow:0px 1px 0px #40523d;
+    text-shadow:0px 1px 0px #4f4c52;
 }
 .myButton:hover {
     background-color:#555c51;
