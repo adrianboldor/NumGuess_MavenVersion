@@ -107,7 +107,7 @@ h1 {
     background-color:#000000;
     -moz-border-radius:28px;
     -webkit-border-radius:28px;
-    border-radius:28px;
+    border-radius:10px;
     border:1px solid #4a4949;
     display:inline-block;
     cursor:pointer;
