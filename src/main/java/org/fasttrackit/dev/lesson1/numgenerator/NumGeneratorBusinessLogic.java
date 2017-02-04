@@ -80,7 +80,10 @@ public class NumGeneratorBusinessLogic {
         if (guessNumber == generatedNumber) {
             hint="";
             successfulGuess = true;
-            sendEmail();
+            sendMail objMail = new sendMail("Grats",totalTime,generatedNumber);
+
+            Thread s = new Thread(objMail);
+            s.start();
 
             long stopTime = System.currentTimeMillis();
             System.out.println("we stoped at"+stopTime);
@@ -111,46 +114,6 @@ public class NumGeneratorBusinessLogic {
         return successfulGuess;
     }
 
-    private static final String SMTP_HOST_NAME = "revo.space";
-    private static final String SMTP_AUTH_USER = "fasttrackit@revo.space";
-    private static final String SMTP_AUTH_PWD  = "0G[VD$AnS(3K";
 
-    public void sendEmail() {
-        Properties props = new Properties();
-        props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.host", SMTP_HOST_NAME);
-        props.put("mail.smtp.auth", "true");
-
-        Authenticator auth = new SMTPAuthenticator();
-        Session mailSession = Session.getDefaultInstance(props, auth);
-        // uncomment for debugging infos to stdout
-        // mailSession.setDebug(true);
-        try {
-            Transport transport = mailSession.getTransport();
-
-            MimeMessage message = new MimeMessage(mailSession);
-            message.setContent("This is a test", "text/plain");
-            message.setFrom(new InternetAddress("fasttrackit@revo.space"));
-            message.addRecipient(Message.RecipientType.TO,
-                    new InternetAddress("adrian.boldor@gmail.com"));
-
-            transport.connect();
-            transport.sendMessage(message,
-                    message.getRecipients(Message.RecipientType.TO));
-            transport.close();
-
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    private class SMTPAuthenticator extends javax.mail.Authenticator {
-        public PasswordAuthentication getPasswordAuthentication() {
-            String username = SMTP_AUTH_USER;
-            String password = SMTP_AUTH_PWD;
-            return new PasswordAuthentication(username, password);
-        }
-    }
 
 }
