@@ -6,7 +6,11 @@ version 1.0
 */
 
 body {
-    background-image: url("http://sweetclipart.com/multisite/sweetclipart/files/sheep_black.png");
+    background-image: linear-gradient(
+            rgba(255, 255, 255, 0.45),
+            rgba(255, 255, 255, 0.45)),
+     url("http://sweetclipart.com/multisite/sweetclipart/files/sheep_black.png");
+    /*background-image: url("http://sweetclipart.com/multisite/sweetclipart/files/sheep_black.png");*/
     background-size: 100px;
     font-family: Verdana, Helvetica, Arial, sans-serif;
     line-height: 125%;
