@@ -74,6 +74,8 @@ public class NumGeneratorBusinessLogic {
             System.out.println("we started at"+startTime);
         }
         numberOfGuesses++;
+        System.out.println("numarul generat" + generatedNumber);
+        System.out.println("numarul ghicit" + guessNumber);
 
         if (guessNumber == generatedNumber) {
             hint="";
