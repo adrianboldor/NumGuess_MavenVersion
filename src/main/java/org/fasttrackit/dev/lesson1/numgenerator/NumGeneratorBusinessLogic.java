@@ -1,5 +1,10 @@
 package org.fasttrackit.dev.lesson1.numgenerator;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
+
 /**
  * Created by condor on 29/11/14.
  * FastTrackIT, 2015
@@ -27,6 +32,8 @@ public class NumGeneratorBusinessLogic {
     private String hint;
     private long startTime;
     private double totalTime;
+
+
 
     public double getTotalTime() {
         return totalTime;
@@ -71,6 +78,7 @@ public class NumGeneratorBusinessLogic {
         if (guessNumber == generatedNumber) {
             hint="";
             successfulGuess = true;
+            sendEmail();
 
             long stopTime = System.currentTimeMillis();
             System.out.println("we stoped at"+stopTime);
@@ -82,12 +90,65 @@ public class NumGeneratorBusinessLogic {
         } else if (guessNumber < generatedNumber) {
             hint = "higher";
             successfulGuess = false;
+            long stopTime = System.currentTimeMillis();
+            System.out.println("we stoped at"+stopTime);
 
+            totalTime = (stopTime - startTime) /1000.0;
+
+            System.out.println("total time is " + totalTime);
         } else if (guessNumber > generatedNumber) {
             hint = "lower";
             successfulGuess = false;
+            long stopTime = System.currentTimeMillis();
+            System.out.println("we stoped at"+stopTime);
+
+            totalTime = (stopTime - startTime) /1000.0;
+
+            System.out.println("total time is " + totalTime);
         }
         return successfulGuess;
+    }
+
+    private static final String SMTP_HOST_NAME = "revo.space";
+    private static final String SMTP_AUTH_USER = "fasttrackit@revo.space";
+    private static final String SMTP_AUTH_PWD  = "0G[VD$AnS(3K";
+
+    public void sendEmail() {
+        Properties props = new Properties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.host", SMTP_HOST_NAME);
+        props.put("mail.smtp.auth", "true");
+
+        Authenticator auth = new SMTPAuthenticator();
+        Session mailSession = Session.getDefaultInstance(props, auth);
+        // uncomment for debugging infos to stdout
+        // mailSession.setDebug(true);
+        try {
+            Transport transport = mailSession.getTransport();
+
+            MimeMessage message = new MimeMessage(mailSession);
+            message.setContent("This is a test", "text/plain");
+            message.setFrom(new InternetAddress("fasttrackit@revo.space"));
+            message.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress("adrian.boldor@gmail.com"));
+
+            transport.connect();
+            transport.sendMessage(message,
+                    message.getRecipients(Message.RecipientType.TO));
+            transport.close();
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private class SMTPAuthenticator extends javax.mail.Authenticator {
+        public PasswordAuthentication getPasswordAuthentication() {
+            String username = SMTP_AUTH_USER;
+            String password = SMTP_AUTH_PWD;
+            return new PasswordAuthentication(username, password);
+        }
     }
 
 }
